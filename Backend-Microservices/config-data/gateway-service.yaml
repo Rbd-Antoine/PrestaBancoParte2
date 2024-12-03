@@ -1,0 +1,38 @@
+server:
+  port: 8080
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://eureka-service-service:8761/eureka/
+  instance:
+    preferIpAddress: true
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      mvc:
+        routes:
+          - id: simulacionCredito-service
+            uri: lb://simulacionCredito-service
+            predicates:
+              - Path=/api/v1/simulacion-credito/**
+          - id: usuario-service
+            uri: lb://usuario-service
+            predicates:
+              - Path=/api/v1/cliente/**
+          - id: solicitud-service
+            uri: lb://solicitud-service
+            predicates:
+              - Path=/api/v1/credito/**
+          - id: evaluacion-service
+            uri: lb://evaluacion-service
+            predicates:
+              - Path=/api/v1/evaluacion/**
+          - id: seguimiento-service
+            uri: lb://seguimiento-service
+            predicates:
+              - Path=/api/v1/seguimiento/**
