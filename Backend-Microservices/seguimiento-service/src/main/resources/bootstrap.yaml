@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: seguimiento-service
+  config:
+    enabled: true
+    uri: http://localhost:8888
+  datasource:
+    url: jdbc:mysql://localhost:3306/seguimientos-db
+    username: root
+    password: root
+  jpa:
+    hibernate:
+      ddl-auto: update

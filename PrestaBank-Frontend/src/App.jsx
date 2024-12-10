@@ -13,14 +13,6 @@ import InfoCredito from './components/InfoCredito.jsx';
 import Informacion from './components/Informacion.jsx';
 import ClientesCosto from './components/ClientesCosto.jsx';
 import InfoEstado from './components/InfoEstado.jsx';
-/*import EmployeeList from './components/EmployeesList';
-import AddEditEmployee from './components/AddEditEmployee';
-import ExtraHoursList from './components/ExtraHoursList';
-import AddEditExtraHours from './components/AddEditExtraHours';
-import NotFound from './components/NotFound';
-import PaycheckList from './components/PaycheckList';
-import PaycheckCalculate from './components/PaycheckCalculate';
-import AnualReport from './components/AnualReport';*/
 
 function App() {
   return (
@@ -48,14 +40,3 @@ function App() {
   );
 }
 export default App
-
-/*<Route path="/employee/list" element={<EmployeeList/>} />
-              <Route path="/employee/add" element={<AddEditEmployee/>} />
-              <Route path="/employee/edit/:id" element={<AddEditEmployee/>} />
-              <Route path="/paycheck/list" element={<PaycheckList/>} />
-              <Route path="/paycheck/calculate" element={<PaycheckCalculate/>} />
-              <Route path="/reports/AnualReport" element={<AnualReport/>} />
-              <Route path="/extraHours/list" element={<ExtraHoursList/>} />
-              <Route path="/extraHours/add" element={<AddEditExtraHours/>} />
-              <Route path="/extraHours/edit/:id" element={<AddEditExtraHours/>} />
-              <Route path="*" element={<NotFound/>} />*/

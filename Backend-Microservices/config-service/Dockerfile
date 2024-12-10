@@ -1,4 +1,11 @@
-FROM eclipse-temurin:17-jre-alpine
-ARG JAR_FILE=target/*.jar
-COPY ${JAR_FILE} config-service.jar
+# Etapa de construcción
+FROM maven:3.8.4-openjdk-17 AS build
+WORKDIR /app
+COPY . .
+RUN mvn clean package -DskipTests
+
+# Etapa final
+FROM openjdk:17
+WORKDIR /app
+COPY --from=build /app/target/*.jar config-service.jar
 ENTRYPOINT ["java","-jar","./config-service.jar"]

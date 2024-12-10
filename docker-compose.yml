@@ -1,0 +1,54 @@
+services:
+  config-server:
+    build:
+      context: ./Backend-Microservices/config-service
+      dockerfile: Dockerfile
+    image: rbdantoine/config-service:latest
+
+  eureka-server:
+    build:
+      context: ./Backend-Microservices/eureka-service
+      dockerfile: Dockerfile
+    image: rbdantoine/eureka-service:latest
+
+  gateway-service:
+    build:
+      context: ./Backend-Microservices/gateway-service
+      dockerfile: Dockerfile
+    image: rbdantoine/gateway-service:latest
+
+  evaluacion-service:
+    build:
+      context: ./Backend-Microservices/evaluacion-service
+      dockerfile: Dockerfile
+    image: rbdantoine/evaluacion-service:latest
+
+  seguimiento-service:
+    build:
+      context: ./Backend-Microservices/seguimiento-service
+      dockerfile: Dockerfile
+    image: rbdantoine/seguimiento-service:latest
+
+  simulationCredito-service:
+    build:
+      context: ./Backend-Microservices/simulationCredito-service
+      dockerfile: Dockerfile
+    image: rbdantoine/simulationCredito-service:latest
+
+  solicitud-service:
+    build:
+      context: ./BackBackend-Microservicesend/solicitud-service
+      dockerfile: Dockerfile
+    image: rbdantoine/solicitud-service:latest
+
+  usuario-service:
+    build:
+      context: ./Backend-Microservices/usuario-service
+      dockerfile: Dockerfile
+    image: rbdantoine/usuario-service:latest
+
+  frontend:
+    build:
+      context: ./PrestaBank-Frontend
+      dockerfile: Dockerfile
+    image: rbdantoine/frontend:latest
