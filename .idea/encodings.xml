@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/Backend-Microservices/config-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Backend-Microservices/eureka-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Backend-Microservices/evaluacion-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Backend-Microservices/gateway-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Backend-Microservices/seguimiento-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Backend-Microservices/simulacionCredito-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Backend-Microservices/solicitud-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Backend-Microservices/usuario-service/src/main/java" charset="UTF-8" />
+  </component>
+</project>

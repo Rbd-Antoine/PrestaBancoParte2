@@ -72,10 +72,27 @@ spec:
           volumeMounts:
             - mountPath: /var/lib/mysql
               name: creditos-db-data
-      volumes:
-        - name: creditos-db-data
-          persistentVolumeClaim:
-            claimName: creditos-db-pvc
+          lifecycle:
+            postStart:
+              exec:
+                command:
+                  - "/bin/sh"
+                  - "-c"
+                  - |
+                    until mysqladmin ping -h localhost --silent; do
+                      echo "Waiting for database to be ready...";
+                      sleep 2;
+                    done;
+                    echo "Checking if database `creditos-db` exists...";
+                    if ! mysql -u$MYSQL_USER -p$MYSQL_PASSWORD -e "USE `creditos-db`;" 2>/dev/null; then
+                      echo "Database `creditos-db` does not exist. Creating...";
+                      mysql -u$MYSQL_USER -p$MYSQL_PASSWORD -e "CREATE DATABASE `creditos-db`;";
+                    else
+                      echo "Database `creditos-db` already exists.";    
+        volumes:
+          - name: creditos-db-data
+            persistentVolumeClaim:
+              claimName: creditos-db-pvc
 ---
 apiVersion: v1
 kind: Service

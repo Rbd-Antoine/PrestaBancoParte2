@@ -1,11 +1,4 @@
-# Etapa de construcción
-FROM maven:3.8.4-openjdk-17 AS build
-WORKDIR /app
-COPY . .
-RUN mvn clean package -DskipTests
-
-# Etapa final
-FROM openjdk:17
-WORKDIR /app
-COPY --from=build /app/target/*.jar evaluacion-service.jar
+FROM docker.io/eclipse-temurin:17-jre-alpine
+ARG JAR_FILE=target/*.jar
+COPY ${JAR_FILE} evaluacion-service.jar
 ENTRYPOINT ["java","-jar","./evaluacion-service.jar"]

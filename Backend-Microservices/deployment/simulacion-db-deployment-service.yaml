@@ -72,6 +72,23 @@ spec:
           volumeMounts:
             - mountPath: /var/lib/mysql
               name: simulacion-db-data
+          lifecycle:
+            postStart:
+              exec:
+                command:
+                  - "/bin/sh"
+                  - "-c"
+                  - |
+                    until mysqladmin ping -h localhost --silent; do
+                      echo "Waiting for database to be ready...";
+                      sleep 2;
+                    done;
+                    echo "Checking if database `simulacion-db` exists...";
+                    if ! mysql -u$MYSQL_USER -p$MYSQL_PASSWORD -e "USE `simulacion-db`;" 2>/dev/null; then
+                      echo "Database `simulacion-db` does not exist. Creating...";
+                      mysql -u$MYSQL_USER -p$MYSQL_PASSWORD -e "CREATE DATABASE `simulacion-db`;";
+                    else
+                      echo "Database `simulacion-db` already exists.";
       volumes:
         - name: simulacion-db-data
           persistentVolumeClaim:

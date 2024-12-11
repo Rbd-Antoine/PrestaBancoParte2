@@ -72,10 +72,27 @@ spec:
           volumeMounts:
             - mountPath: /var/lib/mysql
               name: evaluaciones-db-data
-      volumes:
-        - name: evaluaciones-db-data
-          persistentVolumeClaim:
-            claimName: evaluaciones-db-pvc
+          lifecycle:
+            postStart:
+              exec:
+                command:
+                  - "/bin/sh"
+                  - "-c"
+                  - |
+                    until mysqladmin ping -h localhost --silent; do
+                      echo "Waiting for database to be ready...";
+                      sleep 2;
+                    done;
+                    echo "Checking if database `evaluaciones-db` exists...";
+                    if ! mysql -u$MYSQL_USER -p$MYSQL_PASSWORD -e "USE `evaluaciones-db`;" 2>/dev/null; then
+                      echo "Database `evaluaciones-db` does not exist. Creating...";
+                      mysql -u$MYSQL_USER -p$MYSQL_PASSWORD -e "CREATE DATABASE `evaluaciones-db`;";
+                    else
+                      echo "Database `evaluaciones-db` already exists.";      
+        volumes:
+          - name: evaluaciones-db-data
+            persistentVolumeClaim:
+              claimName: evaluaciones-db-pvc
 ---
 apiVersion: v1
 kind: Service

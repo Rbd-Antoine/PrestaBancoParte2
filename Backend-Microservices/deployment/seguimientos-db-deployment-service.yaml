@@ -72,6 +72,10 @@ spec:
           volumeMounts:
             - mountPath: /var/lib/mysql
               name: seguimientos-db-data
+          lifecycle:
+            postStart:
+              exec:
+                command: ["/bin/sh", "-c", "until mysqladmin ping -u$MYSQL_USER -p$MYSQL_PASSWORD -hlocalhost --silent; do echo \"$(date): Initializing\"; sleep 2; done; mysql -u$MYSQL_USER -p$MYSQL_PASSWORD -e \"CREATE DATABASE IF NOT EXISTS `clientes-db`;\""]
       volumes:
         - name: seguimientos-db-data
           persistentVolumeClaim:
