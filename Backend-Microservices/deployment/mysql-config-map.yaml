@@ -6,13 +6,13 @@ metadata:
     app: mysql-config-map
 data:
   DB_HOST_SEGUIMIENTO: seguimientos-db-service
-  DB_NAME_SEGUIMIENTO: seguimientos-db
+  DB_NAME_SEGUIMIENTO: seguimientos_db
   DB_HOST_EVALUACION: evaluaciones-db-service
   DB_NAME_EVALUACION: evaluaciones_db
   DB_HOST_SIMULACION: simulacion-db-service
-  DB_NAME_SIMULACION: simulacion-db
+  DB_NAME_SIMULACION: simulacion_db
   DB_HOST_SOLICITUD: creditos-db-service
-  DB_NAME_SOLICITUD: creditos-db
+  DB_NAME_SOLICITUD: creditos_db
   DB_HOST_USUARIO: clientes-db-service
-  DB_NAME_USUARIO: clientes-db
+  DB_NAME_USUARIO: clientes_db
   DB_PORT: "3306"

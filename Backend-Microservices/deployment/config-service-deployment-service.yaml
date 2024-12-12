@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: config-service
-          image: rbdantoine/config-service-image
+          image: rbdantoine/config-service
           ports:
             - containerPort: 8888
 ---

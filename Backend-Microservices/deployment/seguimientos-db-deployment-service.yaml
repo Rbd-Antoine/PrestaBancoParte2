@@ -57,12 +57,12 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: mysql-credentials
-                  key: DB_USER_SEGUIMIENTOS
+                  key: DB_USER_SEGUIMIENTO
             - name: MYSQL_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: mysql-credentials
-                  key: DB_PASSWORD_SEGUIMIENTOS
+                  key: DB_PASSWORD_SEGUIMIENTO
             - name: MYSQL_ROOT_PASSWORD
               valueFrom:
                 secretKeyRef:
