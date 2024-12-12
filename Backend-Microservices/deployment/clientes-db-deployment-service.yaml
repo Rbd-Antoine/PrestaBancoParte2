@@ -88,11 +88,11 @@ spec:
                       echo "Database `clientes-db` does not exist. Creating...";
                       mysql -u$MYSQL_USER -p$MYSQL_PASSWORD -e "CREATE DATABASE `clientes-db`;";
                     else
-                      echo "Database `clientes-db` already exists.";      
-        volumes:
-          - name: clientes-db-data
-            persistentVolumeClaim:
-              claimName: clientes-db-pvc
+                      echo "Database `clientes-db` already exists.";  
+      volumes:
+        - name: clientes-db-data
+          persistentVolumeClaim:
+            claimName: clientes-db-pvc
 ---
 apiVersion: v1
 kind: Service

@@ -89,10 +89,10 @@ spec:
                       mysql -u$MYSQL_USER -p$MYSQL_PASSWORD -e "CREATE DATABASE `creditos-db`;";
                     else
                       echo "Database `creditos-db` already exists.";    
-        volumes:
-          - name: creditos-db-data
-            persistentVolumeClaim:
-              claimName: creditos-db-pvc
+      volumes:
+        - name: creditos-db-data
+          persistentVolumeClaim:
+            claimName: creditos-db-pvc
 ---
 apiVersion: v1
 kind: Service

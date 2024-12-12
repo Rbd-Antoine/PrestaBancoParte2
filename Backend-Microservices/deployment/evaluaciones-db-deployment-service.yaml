@@ -89,10 +89,10 @@ spec:
                       mysql -u$MYSQL_USER -p$MYSQL_PASSWORD -e "CREATE DATABASE `evaluaciones-db`;";
                     else
                       echo "Database `evaluaciones-db` already exists.";      
-        volumes:
-          - name: evaluaciones-db-data
-            persistentVolumeClaim:
-              claimName: evaluaciones-db-pvc
+      volumes:
+        - name: evaluaciones-db-data
+          persistentVolumeClaim:
+            claimName: evaluaciones-db-pvc
 ---
 apiVersion: v1
 kind: Service
