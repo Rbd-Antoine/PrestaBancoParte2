@@ -1,24 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: usuario-service-deployment
+  name: usuario-service
   labels:
     app: usuario-service-deployment
 spec:
   selector:
     matchLabels:
-      app: usuario-service-deployment
+      app: usuario-service-pod
   replicas: 1
   template:
     metadata:
       labels:
-        app: usuario-service-deployment
+        app: usuario-service-pod
     spec:
       containers:
         - name: usuario-service
-          image: rbdantoine/usuario-service-image
-          ports:
-            - containerPort: 8094
+          image: sebsatian/usuario-service-image
           env:
             - name: SERVER_PORT
               value: "0"
@@ -31,14 +29,42 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   name: mysql-config-map
-                  key: DB_PORT_USUARIO
-            - name: DB_USERNAME
+                  key: DB_PORT
+            - name: DB_DBNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: mysql-config-map
+                  key: DB_NAME_USUARIO
+            - name: DB_USER
               valueFrom:
                 secretKeyRef:
                   name: mysql-credentials
-                  key: DB_USER_CLIENTES
+                  key: DB_USER_USUARIO
             - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: mysql-credentials
-                  key: DB_PASSWORD_CLIENTES
+                  key: DB_PASSWORD_USUARIO
+            - name: CONFIG_SERVER_HOST
+              value: "config-server"
+            - name: EUREKA_HOST
+              value: "eureka-server"
+            - name: EUREKA_PORT
+              value: "8761"
+            - name: INSTANCE_HOSTNAME
+              value: usuario-service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: usuario-service
+  labels:
+    app: usuario-service-deployment
+spec:
+  clusterIP: None
+  selector:
+    app: usuario-service-pod
+  ports:
+    - protocol: TCP
+      port: 8080 
+      targetPort: 8080

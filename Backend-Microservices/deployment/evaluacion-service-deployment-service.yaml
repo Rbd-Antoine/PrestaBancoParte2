@@ -1,24 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: evaluacion-service-deployment
+  name: evaluacion-service
   labels:
     app: evaluacion-service-deployment
 spec:
   selector:
     matchLabels:
-      app: evaluacion-service-deployment
+      app: evaluacion-service-pod
   replicas: 1
   template:
     metadata:
       labels:
-        app: evaluacion-service-deployment
+        app: evaluacion-service-pod
     spec:
       containers:
         - name: evaluacion-service
-          image: rbdantoine/evaluacion-service-image
-          ports:
-            - containerPort: 8090
+          image: rbdantoine/usuario-service-image
           env:
             - name: SERVER_PORT
               value: "0"
@@ -31,14 +29,42 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   name: mysql-config-map
-                  key: DB_PORT_EVALUACION
-            - name: DB_USERNAME
+                  key: DB_PORT
+            - name: DB_DBNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: mysql-config-map
+                  key: DB_NAME_EVALUACION
+            - name: DB_USER
               valueFrom:
                 secretKeyRef:
                   name: mysql-credentials
-                  key: DB_USER_EVALUACIONES
+                  key: DB_USER_EVALUACION
             - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: mysql-credentials
-                  key: DB_PASSWORD_EVALUACIONES
+                  key: DB_PASSWORD_EVALUACION
+            - name: CONFIG_SERVER_HOST
+              value: "config-server"
+            - name: EUREKA_HOST
+              value: "eureka-server"
+            - name: EUREKA_PORT
+              value: "8761"
+            - name: INSTANCE_HOSTNAME
+              value: evaluacion-service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: evaluacion-service
+  labels:
+    app: evaluacion-service-deployment
+spec:
+  clusterIP: None
+  selector:
+    app: evaluacion-service-pod
+  ports:
+    - protocol: TCP
+      port: 8080 
+      targetPort: 8080

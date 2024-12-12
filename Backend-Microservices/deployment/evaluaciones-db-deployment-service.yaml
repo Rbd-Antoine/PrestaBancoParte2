@@ -7,7 +7,7 @@ metadata:
 spec:
   storageClassName: standard
   capacity:
-    storage: 1Gi
+    storage: 512Mi
   accessModes:
     - ReadWriteOnce
   hostPath:
@@ -26,30 +26,29 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 1Gi
+      storage: 512Mi
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: evaluaciones-db-deployment
+  name: evaluaciones-db
   labels:
     app: evaluaciones-db-deployment
     tier: database
 spec:
+  replicas: 1
   selector:
     matchLabels:
-      app: evaluaciones-db-deployment
-  strategy:
-    type: Recreate
+      app: evaluaciones-db-pod
   template:
     metadata:
       labels:
-        app: evaluaciones-db-deployment
+        app: evaluaciones-db-pod
         tier: database
     spec:
       containers:
-        - name: evaluaciones-db
-          image: mysql
+        - name: mysql
+          image: mysql:latest
           imagePullPolicy: "IfNotPresent"
           ports:
             - containerPort: 3306
@@ -72,23 +71,6 @@ spec:
           volumeMounts:
             - mountPath: /var/lib/mysql
               name: evaluaciones-db-data
-          lifecycle:
-            postStart:
-              exec:
-                command:
-                  - "/bin/sh"
-                  - "-c"
-                  - |
-                    until mysqladmin ping -h localhost --silent; do
-                      echo "Waiting for database to be ready...";
-                      sleep 2;
-                    done;
-                    echo "Checking if database `evaluaciones-db` exists...";
-                    if ! mysql -u$MYSQL_USER -p$MYSQL_PASSWORD -e "USE `evaluaciones-db`;" 2>/dev/null; then
-                      echo "Database `evaluaciones-db` does not exist. Creating...";
-                      mysql -u$MYSQL_USER -p$MYSQL_PASSWORD -e "CREATE DATABASE `evaluaciones-db`;";
-                    else
-                      echo "Database `evaluaciones-db` already exists.";      
       volumes:
         - name: evaluaciones-db-data
           persistentVolumeClaim:
@@ -103,10 +85,10 @@ metadata:
     tier: database
 spec:
   ports:
-    - port: 3308
+    - port: 3306
       targetPort: 3306
       protocol: TCP
   selector:
-    app: evaluaciones-db-deployment
+    app: evaluaciones-db-pod
     tier: database
   type: LoadBalancer
